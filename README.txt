@@ -1,7 +1,6 @@
-	Chương trình bao gồm:
-	+ bậc tắt bài hát
-	+ chuyển bài hát
-	+ lập lại một bài hát
-	+ nghe ngẩu nhiên các bài hát
-	+ hiển thị đa ngôn ngữ
-
+Program includes:
++ song shortcut
++ song switching
++ song repeat
++ random song playback
++ multi-language display
