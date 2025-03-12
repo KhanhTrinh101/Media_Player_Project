@@ -4,7 +4,7 @@
 Translator::Translator(QObject *parent)
     : QObject(parent)
 {
-    translator1.load(":/translate_us.qm");
+    (void)translator1.load(":/translate_us.qm");
     m_app->installTranslator(&translator1);
 }
 
@@ -30,11 +30,11 @@ void Translator::selectLanguage(QString language)
     qDebug() << language;
     // ngôn ngữ tiếng việt
     if(language == "vn"){        
-        translator2.load(":/translate_vn.qm");
+        (void)translator2.load(":/translate_vn.qm");
     }
     // ngôn ngữ tiếng anh
     else{        
-        translator2.load(":/translate_us.qm");
+        (void)translator2.load(":/translate_us.qm");
     }
     m_app->installTranslator(&translator2);
     emit languageChanged();

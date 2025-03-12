@@ -1,18 +1,15 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.1
-import QtMultimedia 5.9
-
 
 Item {
-    // text tên bài hát
     Text {
         id: audioTitle
         anchors.top: parent.top
         anchors.topMargin: headerItem.height / 6
         anchors.left: parent.left
         anchors.leftMargin: headerItem.height / 6
-        text: album_art_view.currentItem ? album_art_view.currentItem.myData.title : "title"
+        text: /*album_art_view.currentItem ? album_art_view.currentItem.myData.title :*/ "title"
         color: "white"
         font.pixelSize: headerItem.height / 4
         onTextChanged: {
@@ -20,12 +17,12 @@ Item {
             textChangeAni.restart()
         }
     }
-    // text tên ca sĩ
+
     Text {
         id: audioSinger
         anchors.top: audioTitle.bottom
         anchors.left: audioTitle.left
-        text: album_art_view.currentItem ?  album_art_view.currentItem.myData.singer : "singer"
+        text: /*album_art_view.currentItem ?  album_art_view.currentItem.myData.singer :*/ "singer"
 
         color: "white"
         font.pixelSize: headerItem.height / 5.5
@@ -39,7 +36,7 @@ Item {
         duration: 400
         easing.type: Easing.InOutQuad
     }
-    // text số bài hát
+
     Text {
         id: audioCount
         anchors.verticalCenter: audioTitle.verticalCenter
@@ -77,11 +74,11 @@ Item {
                 source: albumArt
             }
 
-            MouseArea {
-                anchors.fill: parent
-                // khi nhấn vào album art khác thì index của playlist sẽ thay đổi tương ứng
-                onClicked: player.playlist.setCurrentIndex(index)
-            }
+            // MouseArea {
+            //     anchors.fill: parent
+            //     // khi nhấn vào album art khác thì index của playlist sẽ thay đổi tương ứng
+            //     onClicked: player.playlist.setCurrentIndex(index)
+            // }
         }
     }
 
@@ -95,7 +92,7 @@ Item {
         preferredHighlightBegin: 0.5
         preferredHighlightEnd: 0.5
         focus: true
-        model: playlistModel
+        // model: playlistModel
         delegate: appDelegate
         pathItemCount: 3
         path: Path {
@@ -109,13 +106,13 @@ Item {
             PathAttribute { name: "iconScale"; value: 0.5 }
         }
     }
-    // khi index của playlist thay đồi thì index của album art cũng thay đổi tương ứng
-    Connections{
-        target: PlayList
-        onCurrentIndexChanged: {
-            album_art_view.currentIndex = index;
-        }
-    }
+
+    // Connections{
+    //     target: PlayList
+    //     onCurrentIndexChanged: {
+    //         album_art_view.currentIndex = index;
+    //     }
+    // }
 
     //Progress
     Text {
@@ -124,21 +121,23 @@ Item {
 
         anchors.right: progressBar.left
         anchors.rightMargin: headerItem.height / 6
-        text: utility ? utility.getTimeInfo(player.position) : "00:00"
+        text: /*utility ? utility.getTimeInfo(player.position) :*/ "00:00"
 
         color: "white"
         font.pixelSize: headerItem.height / 4
     }
+
     Text {
         id: totalTime
         anchors.verticalCenter: progressBar.verticalCenter
         anchors.left: progressBar.right
         anchors.leftMargin: headerItem.height / 6
-        text: utility ? utility.getTimeInfo(player.duration) : "00:00"
+        text: /*utility ? utility.getTimeInfo(player.duration) :*/ "00:00"
 
         color: "white"
         font.pixelSize: headerItem.height / 4
     }
+
     Slider{
         id: progressBar
         width: root.width * 0.77 - playlist.width
@@ -146,47 +145,47 @@ Item {
         anchors.bottomMargin: root.height / 5.5
         anchors.horizontalCenter: parent.horizontalCenter
         from: 0
-        to: player.duration
-        value: player.position
-        background: Rectangle {
-            x: progressBar.leftPadding
-            y: progressBar.topPadding + progressBar.availableHeight / 2 - height / 2
-            implicitWidth: 200
-            implicitHeight: totalTime.height * 0.1
-            width: progressBar.availableWidth
-            height: implicitHeight
-            radius: totalTime.height / 5
-            color: "gray"
+        to: /*player.duration*/0
+        value: /*player.position*/0
+        // background: Rectangle {
+        //     x: progressBar.leftPadding
+        //     y: progressBar.topPadding + progressBar.availableHeight / 2 - height / 2
+        //     implicitWidth: 200
+        //     implicitHeight: totalTime.height * 0.1
+        //     width: progressBar.availableWidth
+        //     height: implicitHeight
+        //     radius: totalTime.height / 5
+        //     color: "gray"
 
-            Rectangle {
-                width: progressBar.visualPosition * parent.width
-                height: parent.height
-                color: "white"
-                radius: totalTime.height / 5
-            }
-        }
-        handle: Image {
-            anchors.verticalCenter: parent.verticalCenter
-            height: totalTime.height
-            width: height
-            x: progressBar.leftPadding + progressBar.visualPosition * (progressBar.availableWidth - width)
-            y: progressBar.topPadding + progressBar.availableHeight / 2 - height / 2
-            source: "qrc:/images/icon/point.png"
-            Image {
-                anchors.centerIn: parent
-                source: "qrc:/images/icon/center_point.png"
-                height: parent.height/1.5
-                width: height
-            }
-        }
-        onMoved: {
-            if (player.seekable){
-                player.setPosition(Math.floor(position*player.duration))
-            }
-        }
+        //     Rectangle {
+        //         width: progressBar.visualPosition * parent.width
+        //         height: parent.height
+        //         color: "white"
+        //         radius: totalTime.height / 5
+        //     }
+        // }
+        // handle: Image {
+        //     anchors.verticalCenter: parent.verticalCenter
+        //     height: totalTime.height
+        //     width: height
+        //     x: progressBar.leftPadding + progressBar.visualPosition * (progressBar.availableWidth - width)
+        //     y: progressBar.topPadding + progressBar.availableHeight / 2 - height / 2
+        //     source: "qrc:/images/icon/point.png"
+        //     Image {
+        //         anchors.centerIn: parent
+        //         source: "qrc:/images/icon/center_point.png"
+        //         height: parent.height/1.5
+        //         width: height
+        //     }
+        // }
+        // onMoved: {
+        //     if (player.seekable){
+        //         player.setPosition(Math.floor(position*player.duration))
+        //     }
+        // }
     }
 
-    //Media control
+    // Media control
     // ngẫu nhiên
     SwitchButton {
         id: shuffer
@@ -197,28 +196,29 @@ Item {
         icon_off: "qrc:/images/Button Control/shuffle.png"
         icon_on: "qrc:/images/Button Control/shuffle-1.png"
 
-        onStatusChanged: {
-            if(shuffer.status === 1)
-            {
-                if(repeater.status === 1) {
-                    console.log("Playlist.CurrentItemInLoop ON")
-                    APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
-                }else {
-                    console.log("Playlist.Random ON")
-                    APP_CTRL.playBackModeList(Playlist.Random)
-                }
-            }else{
-                if(repeater.status === 1) {
-                    console.log("Playlist.CurrentItemInLoop ON")
-                    APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
-                }else {
-                    console.log("Playlist.Sequential ON")
-                    APP_CTRL.playBackModeList(Playlist.Sequential)
-                }
-            }
-        }
+        // onStatusChanged: {
+        //     if(shuffer.status === 1)
+        //     {
+        //         if(repeater.status === 1) {
+        //             console.log("Playlist.CurrentItemInLoop ON")
+        //             APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
+        //         }else {
+        //             console.log("Playlist.Random ON")
+        //             APP_CTRL.playBackModeList(Playlist.Random)
+        //         }
+        //     }else{
+        //         if(repeater.status === 1) {
+        //             console.log("Playlist.CurrentItemInLoop ON")
+        //             APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
+        //         }else {
+        //             console.log("Playlist.Sequential ON")
+        //             APP_CTRL.playBackModeList(Playlist.Sequential)
+        //         }
+        //     }
+        // }
     }
-    // lùi
+
+    // Back
     ButtonControl {
         id: prev
         widthSize: play.widthSize / 1.2
@@ -229,21 +229,29 @@ Item {
         icon_pressed: "qrc:/images/Button Control/hold-prev.png"
         icon_released: "qrc:/images/Button Control/prev.png"
         onClicked: {
-            // khi lùi nếu index bằng 0 thì gán về cuối danh sách
-            if(shuffer.status === 1){
-                var newindex = Math.floor(Math.random() * album_art_view.count)
-                while(newindex === player.playlist.currentIndex){
-                    newindex = Math.floor(Math.random() * album_art_view.count)
-                }
-                player.playlist.setCurrentIndex(newindex)
-            }else {
-                if (player.playlist.currentIndex > 0)
-                    player.playlist.setCurrentIndex(player.playlist.currentIndex - 1)
-                else player.playlist.setCurrentIndex(album_art_view.count-1)
-            }
+            // if(shuffer.status === 1)
+            // {
+            //     var newindex = Math.floor(Math.random() * album_art_view.count)
+            //     while(newindex === player.playlist.currentIndex)
+            //     {
+            //         newindex = Math.floor(Math.random() * album_art_view.count)
+            //     }
+            //     player.playlist.setCurrentIndex(newindex)
+            // }
+            // else
+            // {
+            //     if (player.playlist.currentIndex > 0)
+            //     {
+            //         player.playlist.setCurrentIndex(player.playlist.currentIndex - 1)
+            //     }
+            //     else
+            //     {
+            //         player.playlist.setCurrentIndex(album_art_view.count-1)
+            //     }
+            // }
         }
     }
-    // phát
+
     ButtonControl {
         id: play
         widthSize: root.height / 8
@@ -251,24 +259,24 @@ Item {
         anchors.top: progressBar.bottom
         anchors.topMargin: heihgtSize * 0.1
         anchors.horizontalCenter: progressBar.horizontalCenter
-        icon_default: player.state == MediaPlayer.PlayingState ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
-        icon_pressed: player.state == MediaPlayer.PlayingState ?  "qrc:/images/Button Control/hold-pause.png" : "qrc:/images/Button Control/hold-play.png"
-        icon_released: player.state== MediaPlayer.PlayingState ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
-        onClicked: {
-            if (player.state != MediaPlayer.PlayingState){
-                player.play()
-            } else {
-                player.pause()
-            }
-        }
-        Connections {
-            target: player
-            onStateChanged:{
-                play.source = player.state == MediaPlayer.PlayingState ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
-            }
-        }
+        icon_default: /*player.state === MediaPlayer.PlayingState*/0 ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
+        icon_pressed: /*player.state === MediaPlayer.PlayingState ?*/0 ?  "qrc:/images/Button Control/hold-pause.png" : "qrc:/images/Button Control/hold-play.png"
+        icon_released: /*player.state=== MediaPlayer.PlayingState ?*/0 ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
+        // onClicked: {
+        //     if (player.state !== MediaPlayer.PlayingState){
+        //         player.play()
+        //     } else {
+        //         player.pause()
+        //     }
+        // }
+        // Connections {
+        //     target: player
+        //     onStateChanged:{
+        //         play.source = player.state === MediaPlayer.PlayingState ?  "qrc:/images/Button Control/pause.png" : "qrc:/images/Button Control/play.png"
+        //     }
+        // }
     }
-    // tới
+
     ButtonControl {
         id: next
         widthSize: play.widthSize /1.2
@@ -278,22 +286,22 @@ Item {
         icon_default: "qrc:/images/Button Control/next.png"
         icon_pressed: "qrc:/images/Button Control/hold-next.png"
         icon_released: "qrc:/images/Button Control/next.png"
-        onClicked: {
-            // khi tiến nếu index ở cuối danh sách thì gán về đầu danh sách
-            if(shuffer.status === 1){
-                var newindex = Math.floor(Math.random() * album_art_view.count)
-                while(newindex === player.playlist.currentIndex){
-                    newindex = Math.floor(Math.random() * album_art_view.count)
-                }
-                player.playlist.setCurrentIndex(newindex)
-            }else {
-                if (player.playlist.currentIndex < album_art_view.count -1)
-                    player.playlist.setCurrentIndex(player.playlist.currentIndex + 1)
-                else player.playlist.setCurrentIndex(0)
-            }
-        }
+        // onClicked: {
+        //     // khi tiến nếu index ở cuối danh sách thì gán về đầu danh sách
+        //     if(shuffer.status === 1){
+        //         var newindex = Math.floor(Math.random() * album_art_view.count)
+        //         while(newindex === player.playlist.currentIndex){
+        //             newindex = Math.floor(Math.random() * album_art_view.count)
+        //         }
+        //         player.playlist.setCurrentIndex(newindex)
+        //     }else {
+        //         if (player.playlist.currentIndex < album_art_view.count -1)
+        //             player.playlist.setCurrentIndex(player.playlist.currentIndex + 1)
+        //         else player.playlist.setCurrentIndex(0)
+        //     }
+        // }
     }
-    // lặp lại
+
     SwitchButton {
         id: repeater
         widthSize: next.widthSize / 1.5
@@ -303,20 +311,20 @@ Item {
         icon_on: "qrc:/images/Button Control/repeat1_hold.png"
         icon_off: "qrc:/images/Button Control/repeat.png"
 
-        onStatusChanged: {
-            if(repeater.status === 1) {
-                console.log("Playlist.CurrentItemInLoop ON")
-                APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
-            }
-            else {
-                if(shuffer.status === 1){
-                    console.log("Playlist.Random ON")
-                    APP_CTRL.playBackModeList(Playlist.Random)
-                }else {
-                    console.log("Playlist.Sequential ON")
-                    APP_CTRL.playBackModeList(Playlist.Sequential)
-                }
-            }
-        }
+        // onStatusChanged: {
+        //     if(repeater.status === 1) {
+        //         console.log("Playlist.CurrentItemInLoop ON")
+        //         APP_CTRL.playBackModeList(Playlist.CurrentItemInLoop)
+        //     }
+        //     else {
+        //         if(shuffer.status === 1){
+        //             console.log("Playlist.Random ON")
+        //             APP_CTRL.playBackModeList(Playlist.Random)
+        //         }else {
+        //             console.log("Playlist.Sequential ON")
+        //             APP_CTRL.playBackModeList(Playlist.Sequential)
+        //         }
+        //     }
+        // }
     }
 }

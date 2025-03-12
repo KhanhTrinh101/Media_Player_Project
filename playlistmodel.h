@@ -77,7 +77,6 @@ private:
 class PlaylistModel : public QAbstractListModel
 {
     Q_OBJECT
-
 public:
     enum Roles {
         TitleRole = Qt::UserRole + 1,

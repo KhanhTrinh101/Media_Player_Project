@@ -7,13 +7,15 @@ ApplicationWindow {
     visible: true
     width: 1920
     height: 1200
-    title: qsTr("STR_MAIN_TITLE") + Translator.updateText
+    title: "Main Tittle"
+
+    property string app_bg: "qrc:/images/back ground/background.png"
 
     // Backgroud of Application
     Image {
-        id: backgroud
+        id: background
         anchors.fill: parent
-        source: "qrc:/images/back ground/background.png"
+        source: app_bg
     }
 
     // Header
@@ -40,14 +42,4 @@ ApplicationWindow {
         anchors.leftMargin: playlist.width
         anchors.bottom: parent.bottom
     }
-
-    Settings {
-        category: "window"
-        property alias x: root.x
-        property alias y: root.y
-        property alias width: root.width
-        property alias height: root.height
-    }
-
-
 }

@@ -52,7 +52,8 @@
 #define PLAYER_H
 
 #include <QMediaPlayer>
-#include <QMediaPlaylist>
+#include <QString>
+// #include <QMediaPlaylist>
 #include <imports/MyTagLib/include/tag.h>
 #include <imports/MyTagLib/include/fileref.h>
 #include <imports/MyTagLib/include/id3v2tag.h>
@@ -63,7 +64,7 @@
 
 QT_BEGIN_NAMESPACE
 class QAbstractItemView;
-class QMediaPlayer;
+// class QMediaPlayer;
 QT_END_NAMESPACE
 
 class PlaylistModel;
@@ -73,24 +74,24 @@ using namespace TagLib;
 class Player : public QObject
 {
     Q_OBJECT
-
 public:
     explicit Player(QObject *parent = nullptr);
     ~Player();
-    void addToPlaylist(const QList<QUrl> &urls);
-    QString getAlbumArt(QUrl url);
+
+    void addUrlToPlaylist(const QList<QUrl> &urls);
     void open();
+    // Q_INVOKABLE void playBackModeList(QMediaPlaylist::PlaybackMode mode);
+
     Q_INVOKABLE QString getTimeInfo(qint64 currentInfo);
-    Q_INVOKABLE void playBackModeList(QMediaPlaylist::PlaybackMode mode);
     QMediaPlayer *getPlayer();
-    QMediaPlaylist *getPlaylist();
+    QString *getPlaylist();
     PlaylistModel *getPlaylistModel();
+    QString getAlbumArt(QUrl url);
 
 private:
     QMediaPlayer *m_player ;
-    QMediaPlaylist *m_playlist ;
+    QString *m_playlist ;
     PlaylistModel *m_playlistModel;
 };
-
 
 #endif // PLAYER_H

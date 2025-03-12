@@ -51,7 +51,7 @@
 #include "playlistmodel.h"
 #include <QFileInfo>
 #include <QUrl>
-#include <QMediaPlaylist>
+// #include <QMediaPlaylist>
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -67,22 +67,30 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 // get data
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-   if(index.row() < 0 || index.row() >= m_data.count()) {
+   if(index.row() < 0 || index.row() >= m_data.count())
+   {
        return QVariant();
    }
+
    const Song &song = m_data.at(index.row());
-   if (role == TitleRole) {
+
+   if (role == TitleRole)
+   {
        return song.title();
-   }
-   else if(role == SingerRole) {
+   }   
+   else if(role == SingerRole)
+   {
        return song.singer();
    }
-   else if(role == SourceRole) {
+   else if(role == SourceRole)
+   {
        return song.source();
    }
-   else if(role == AlbumArtRole) {
+   else if(role == AlbumArtRole)
+   {
        return song.album_art();
    }
+
    return QVariant();
 }
 
@@ -100,6 +108,7 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     roles[SingerRole] = "singer";
     roles[SourceRole] = "source";
     roles[AlbumArtRole] = "albumArt";
+
     return roles;
 }
 

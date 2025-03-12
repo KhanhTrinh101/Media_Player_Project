@@ -11,7 +11,14 @@ Drawer {
         anchors.fill: parent
         color: "transparent"
     }
-    // danh sách bài hát
+
+    property string notify: "Notify"
+
+    property string mediaPlayList_bg: "qrc:/images/back ground/playlist.png"
+    property string playList_HoldBg: "qrc:/images/back ground/hold.png"
+    property string playList_item: "qrc:/images/back ground/playlist_item.png"
+
+    // List Songs
     ListView {
         id: mediaPlaylist
         anchors.fill: parent
@@ -23,13 +30,15 @@ Drawer {
             property variant myData: model
             implicitWidth: playlistItem.width
             implicitHeight: playlistItem.height
+
             Image {
                 id: playlistItem
                 width: mediaPlaylist.width
                 height: mediaPlaylist.height / 6
-                source: "qrc:/images/back ground/playlist.png"
+                source: mediaPlayList_bg
                 opacity: 0.5
             }
+
             Text {
                 text: title
                 anchors.fill: parent
@@ -38,35 +47,40 @@ Drawer {
                 color: "white"
                 font.pixelSize: playlistItem.height / 4.5
             }
-            onClicked: {
-                // khi nhấn vào bài hát khác thì index của playlist sẽ thay đổi tương ứng
-                player.playlist.setCurrentIndex(index)
-            }
+
+            // onClicked: {
+            //     player.playlist.setCurrentIndex(index)
+            // }
+
             onPressed: {
-                playlistItem.source = "qrc:/images/back ground/hold.png"
+                playlistItem.source = playList_HoldBg
             }
+
             onReleased: {
-                playlistItem.source = "qrc:/images/back ground/playlist.png"
+                playlistItem.source = mediaPlayList_bg
             }
+
             onCanceled:  {
-                playlistItem.source = "qrc:/images/back ground/playlist.png"
+                playlistItem.source = mediaPlayList_bg
             }
         }
-        // nếu local file music rỗng thì danh sách sẽ hiển thị một thông báo
+
+        // Notify will show when list songs is empty
         Text {            
             anchors.horizontalCenter: parent.horizontalCenter   
-            text: qsTr("STR_NOTIFY") + Translator.updateText
+            text: notify
             color: "white"
             font.pointSize: headerItem.height / 9
             visible: mediaPlaylist.count ? false : true
         }
 
         highlight: Image {
-            source: "qrc:/images/back ground/playlist_item.png"
+            source: playList_item
             width: mediaPlaylist.width
             height: mediaPlaylist.height / 6
+
             Image {
-                source: "qrc:/images/back ground/playlist_item.png"
+                source: playList_item
                 anchors.left: parent.left
                 anchors.leftMargin: width / 2
                 anchors.verticalCenter: parent.verticalCenter
@@ -74,6 +88,7 @@ Drawer {
                 height: width
             }
         }
+
         ScrollBar.vertical: ScrollBar {
             parent: mediaPlaylist.parent
             anchors.top: mediaPlaylist.top
@@ -82,11 +97,10 @@ Drawer {
         }
     }
 
-    // khi index của playlist thay đồi thì index của danh sách hiển thị cũng thay đổi tương ứng
-    Connections{
-        target: PlayList
-        onCurrentIndexChanged: {
-            mediaPlaylist.currentIndex = index;
-        }
-    }
+    // Connections{
+    //     target: PlayList
+    //     onCurrentIndexChanged: {
+    //         mediaPlaylist.currentIndex = index;
+    //     }
+    // }
 }

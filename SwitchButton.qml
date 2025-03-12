@@ -9,9 +9,11 @@ MouseArea {
     property alias widthSize: img.width
     implicitWidth: img.width
     implicitHeight: img.height
+
     Image {
         id: img        
         source: root.status === 0 ? icon_off : icon_on
     }
+
     onClicked: status = !status
 }
